@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'app-react-vite/**'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    paths:
+      - 'app-react-vite/**'
 
 jobs:
   build_and_deploy_job:
@@ -32,6 +36,9 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "/dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          VITE_BACKEND_URI: https://swa-api-732.azurewebsites.net
+          VITE_CLOUD_ENV: production
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
